@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FAFB2704-1ED4-4808-8C81-1062A59223F1}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{4D401DB4-4EC1-4572-9A9D-04ACCBBBE058}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConsoleUI</RootNamespace>
-    <AssemblyName>ConsoleUI</AssemblyName>
+    <RootNamespace>BookServiceLogic</RootNamespace>
+    <AssemblyName>BookServiceLogic</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,21 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BookEntity">
-      <HintPath>..\BookEntity\bin\Debug\BookEntity.dll</HintPath>
-    </Reference>
-    <Reference Include="BookListService">
-      <HintPath>..\BookListService\bin\Debug\BookListService.dll</HintPath>
-    </Reference>
-    <Reference Include="BookRepositories, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\BookRepositories\bin\Debug\BookRepositories.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject">
-      <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject.Extensions.ContextPreservation">
-      <HintPath>..\..\packages\Ninject.Extensions.ContextPreservation.3.2.0.0\lib\net45-full\Ninject.Extensions.ContextPreservation.dll</HintPath>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,19 +40,30 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="XmlExporters, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\XmlExporters\bin\Debug\XmlExporters.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigModule.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="IXmlFormatExporter.cs" />
+    <Compile Include="BinaryFileRepository.cs" />
+    <Compile Include="Book.cs" />
+    <Compile Include="BookAlreadyExistsException.cs" />
+    <Compile Include="BookListService.cs" />
+    <Compile Include="BinaryFormatterRepository.cs" />
+    <Compile Include="IBookRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Linq2XmlExorter.cs" />
+    <Compile Include="XmlWriterExporter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

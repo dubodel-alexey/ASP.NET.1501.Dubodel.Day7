@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using BookEntity;
 
-namespace BookServiceLogic.Repository
+namespace BookListService.Interfaces
 {
-    interface IBookRepository
+    public interface IBookRepository
     {
         IEnumerable<Book> LoadBooks();
         void SaveBooks(IEnumerable<Book> books);

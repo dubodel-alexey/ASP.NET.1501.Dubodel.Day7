@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BookServiceLogic.Exceptions;
-using BookServiceLogic.Repository;
+using BookEntity;
+using BookListService.Exceptions;
+using BookListService.Interfaces;
 using NLog;
 
-namespace BookServiceLogic
+namespace BookListService
 {
     public class BookListService
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private IBookRepository repository;
-        
+
         public BookListService(IBookRepository repository)
         {
             this.repository = repository;
@@ -52,7 +53,7 @@ namespace BookServiceLogic
         {
             var books = repository.LoadBooks();
             var bookList = new BookListService(nRepository);
-                
+
             foreach (Book book in books)
             {
                 if (predicate(book))
@@ -76,6 +77,12 @@ namespace BookServiceLogic
         {
             var books = repository.LoadBooks();
             return books.Where(book => publisher == book.Publisher).ToList();
+        }
+
+        public void ExportToXml(IXmlFormatExporter exporter, string fileName)
+        {
+            var books = repository.LoadBooks();
+            exporter.Export(books, fileName);
         }
     }
 }

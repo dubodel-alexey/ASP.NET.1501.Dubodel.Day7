@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4D401DB4-4EC1-4572-9A9D-04ACCBBBE058}</ProjectGuid>
+    <ProjectGuid>{8A5529A9-DC66-4299-9242-7FAE3A5E4D08}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BookServiceLogic</RootNamespace>
-    <AssemblyName>BookServiceLogic</AssemblyName>
+    <RootNamespace>BookListService</RootNamespace>
+    <AssemblyName>BookListService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,8 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BookEntity">
+      <HintPath>..\BookEntity\bin\Debug\BookEntity.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,11 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repository\BinaryFileRepository.cs" />
-    <Compile Include="Book.cs" />
-    <Compile Include="Exceptions\BookAlreadyExistsException.cs" />
     <Compile Include="BookListService.cs" />
-    <Compile Include="Repository\IBookRepository.cs" />
+    <Compile Include="Exceptions\BookAlreadyExistsException.cs" />
+    <Compile Include="Interfaces\IBookRepository.cs" />
+    <Compile Include="Interfaces\IXmlFormatExporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -57,9 +59,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

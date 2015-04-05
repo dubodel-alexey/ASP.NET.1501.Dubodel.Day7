@@ -1,13 +1,28 @@
 ﻿using System;
-using BookServiceLogic;
+using BookEntity;
+using BookListService.Interfaces;
+using Ninject;
 
 namespace ConsoleUI
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
-            var bookService = new BookListService();
+            IKernel standartKernel = new StandardKernel(new ConfigModule());
+
+            var mainReposFileName = new Ninject.Parameters.ConstructorArgument("fileName", "repository.txt");
+            var secReposFilename = new Ninject.Parameters.ConstructorArgument("fileName", "filteredRepository.txt");
+
+            var mainRepository = standartKernel.Get<IBookRepository>(mainReposFileName);
+            var xmlExporter = standartKernel.Get<IXmlFormatExporter>();
+            var filteredRepository = standartKernel.Get<IBookRepository>(secReposFilename);
+
+            /*  var mainRepository = new BinaryFormatterRepository("repository.txt");
+              var filtredRepository = new BinaryFormatterRepository("filtredRepository.txt");
+              var xmlExporter = new Linq2XmlExorter();*/
+
+            var bookService = new BookListService.BookListService(mainRepository);
 
             bookService.AddBook(new Book
             {
@@ -56,6 +71,9 @@ namespace ConsoleUI
                 Console.WriteLine("\t" + book);
             }
 
+            bookService.Filter(book => book.Author == "Пушкин", filteredRepository);
+
+            bookService.ExportToXml(xmlExporter, "books.xml");
             Console.ReadKey();
         }
     }
